@@ -1,0 +1,11 @@
+AllSubjects/Ensemble1_LandsatResNeXt101/data/
+AllSubjects/Ensemble1_LandsatResNeXt101/epochs/
+AllSubjects/Ensemble1_LandsatResNeXt101/models/
+
+AllSubjects/Ensemble2_StaticResNeXt101/data/
+AllSubjects/Ensemble2_StaticResNeXt101/epochs/
+AllSubjects/Ensemble2_StaticResNeXt101/models/
+
+AllSubjects/Ensemble3_StreetViewResNet152/data/
+AllSubjects/Ensemble3_StreetViewResNet152/epochs/
+AllSubjects/Ensemble3_StreetViewResNet152/models/
