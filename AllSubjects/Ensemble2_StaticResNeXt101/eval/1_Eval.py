@@ -48,8 +48,8 @@ class ImgAugTransform:
     return self.aug.augment_image(img)
 
 
-model_ft = joblib.load("./clean/AllSubjects/Ensemble1_LandsatResNeXt101/epochs/LandsatResNeXt101_Epoch6.sav")
-directory = "./clean/AllSubjects/Ensemble1_LandsatResNeXt101/data/pass/"
+model_ft = joblib.load("./clean/AllSubjects/Ensemble2_StaticResNeXt101/epochs/StaticResNeXt101_Epoch5.sav")
+directory = "./clean/AllSubjects/Ensemble2_StaticResNeXt101/data/jpg/"
 transform = transforms.Compose([
 	ImgAugTransform(),
 	transforms.ToTensor(),
@@ -88,19 +88,9 @@ def EvalModel(model, directory, transforms):
 
 
 
-pass_preds = EvalModel(model_ft, directory, transform)
-pass_preds.to_csv("./clean/AllSubjects/Ensemble/data/LandsatPassPreds.csv")
+all_preds = EvalModel(model_ft, directory, transform)
+all_preds.to_csv("./clean/AllSubjects/Ensemble/data/StaticPreds.csv")
 
-model_ft = joblib.load("./clean/AllSubjects/Ensemble1_LandsatResNeXt101/epochs/LandsatResNeXt101_Epoch6.sav")
-directory = "./clean/AllSubjects/Ensemble1_LandsatResNeXt101/data/fail/"
-transform = transforms.Compose([
-	ImgAugTransform(),
-	transforms.ToTensor(),
-	transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
-])
-
-fail_preds = EvalModel(model_ft, directory, transform)
-fail_preds.to_csv("./clean/AllSubjects/Ensemble/data/LandsatFailPreds.csv")
 
 
 
