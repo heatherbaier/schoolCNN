@@ -10,14 +10,14 @@ AllSubjects/Ensemble3_StreetViewResNet152/data/
 AllSubjects/Ensemble3_StreetViewResNet152/epochs/
 AllSubjects/Ensemble3_StreetViewResNet152/models/
 
-./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/data/
-./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/epochs/
-./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/models/
+Subject1_English/Ensemble1_English_LandsatResNeXt101/data/
+Subject1_English/Ensemble1_English_LandsatResNeXt101/epochs/
+Subject1_English/Ensemble1_English_LandsatResNeXt101/models/
 
-./clean/Subject1_English/Ensemble2_English_StaticResNeXt101/data/
-./clean/Subject1_English/Ensemble2_English_StaticResNeXt101/epochs/
-./clean/Subject1_English/Ensemble2_English_StaticResNeXt101/models/
+Subject1_English/Ensemble2_English_StaticResNeXt101/data/
+Subject1_English/Ensemble2_English_StaticResNeXt101/epochs/
+Subject1_English/Ensemble2_English_StaticResNeXt101/models/
 
-./clean/Subject1_English/Ensemble3_English_StreetViewResNeXt101/data/
-./clean/Subject1_English/Ensemble3_English_StreetViewResNeXt101/epochs/
-./clean/Subject1_English/Ensemble3_English_StreetViewResNeXt101/models/
+Subject1_English/Ensemble3_English_StreetViewResNeXt101/data/
+Subject1_English/Ensemble3_English_StreetViewResNeXt101/epochs/
+Subject1_English/Ensemble3_English_StreetViewResNeXt101/models/
