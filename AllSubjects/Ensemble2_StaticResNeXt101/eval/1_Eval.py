@@ -48,7 +48,7 @@ class ImgAugTransform:
     return self.aug.augment_image(img)
 
 
-model_ft = joblib.load("./clean/AllSubjects/Ensemble2_StaticResNeXt101/epochs/StaticResNeXt101_Epoch5.sav")
+model_ft = joblib.load("./clean/AllSubjects/Ensemble2_StaticResNeXt101/models/StaticResNeXt101_10epoch.sav")
 directory = "./clean/AllSubjects/Ensemble2_StaticResNeXt101/data/jpg/"
 transform = transforms.Compose([
 	ImgAugTransform(),
@@ -77,13 +77,10 @@ def EvalModel(model, directory, transforms):
 #			print(percentage)
 			cfail.append(percentage[0].tolist())
 			cpass.append(percentage[1].tolist())
-			class_pred.append(index[0].tolist())
 			print("Predicted " + str(count) + " out of " + str(len(os.listdir(directory))) + " images." )
 	df['school_id'] = ids
 	df['prob_fail'] = cfail
 	df['prob_pass'] = cpass
-	df['class_pred'] = class_pred
-	df['label'] = 0
 	return df
 
 

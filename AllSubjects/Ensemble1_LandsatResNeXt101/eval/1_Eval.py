@@ -48,7 +48,7 @@ class ImgAugTransform:
     return self.aug.augment_image(img)
 
 
-model_ft = joblib.load("./clean/AllSubjects/Ensemble1_LandsatResNeXt101/epochs/LandsatResNeXt101_Epoch6.sav")
+model_ft = joblib.load("./clean/AllSubjects/Ensemble1_LandsatResNeXt101/models/LandsatResNeXt101_10epoch.sav")
 directory = "./clean/AllSubjects/Ensemble1_LandsatResNeXt101/data/pass/"
 transform = transforms.Compose([
 	ImgAugTransform(),
@@ -77,13 +77,10 @@ def EvalModel(model, directory, transforms):
 #			print(percentage)
 			cfail.append(percentage[0].tolist())
 			cpass.append(percentage[1].tolist())
-			class_pred.append(index[0].tolist())
 			print("Predicted " + str(count) + " out of " + str(len(os.listdir(directory))) + " images." )
 	df['school_id'] = ids
 	df['prob_fail'] = cfail
 	df['prob_pass'] = cpass
-	df['class_pred'] = class_pred
-	df['label'] = 0
 	return df
 
 
@@ -91,7 +88,9 @@ def EvalModel(model, directory, transforms):
 pass_preds = EvalModel(model_ft, directory, transform)
 pass_preds.to_csv("./clean/AllSubjects/Ensemble/data/LandsatPassPreds.csv")
 
-model_ft = joblib.load("./clean/AllSubjects/Ensemble1_LandsatResNeXt101/epochs/LandsatResNeXt101_Epoch6.sav")
+
+
+model_ft = joblib.load("./clean/AllSubjects/Ensemble1_LandsatResNeXt101/models/LandsatResNeXt101_10epoch.sav")
 directory = "./clean/AllSubjects/Ensemble1_LandsatResNeXt101/data/fail/"
 transform = transforms.Compose([
 	ImgAugTransform(),
@@ -106,4 +105,17 @@ fail_preds.to_csv("./clean/AllSubjects/Ensemble/data/LandsatFailPreds.csv")
 
 
 
+./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/data/
+./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/epochs/
+./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/models/
+
+
+./clean/Subject1_English/Ensemble2_English_StaticResNeXt101/data/
+./clean/Subject1_English/Ensemble2_English_StaticResNeXt101/epochs/
+./clean/Subject1_English/Ensemble2_English_StaticResNeXt101/models/
+
+
+./clean/Subject1_English/Ensemble3_English_StreetViewResNeXt101/data/
+./clean/Subject1_English/Ensemble3_English_StreetViewResNeXt101/epochs/
+./clean/Subject1_English/Ensemble3_English_StreetViewResNeXt101/models/
 

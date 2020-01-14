@@ -80,7 +80,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
                 best_model_wts = copy.deepcopy(model.state_dict())
 
                 # Save each epoch that achieves a higher accuracy than the current best_acc in case the model crashes mid-training
-                model_name = './clean/AllSubjects/Ensemble2_StaticResNeXt101/epochs/StaticResNeXt101_Epoch' + str(epoch_num) + '.sav'
+                model_name = './clean/Subject1_English/Ensemble2_English_StaticResNeXt101/epochs/StaticResNeXt101_Eng_Epoch' + str(epoch_num) + '.sav'
                 pickle.dump(model, open(model_name, 'wb'))
 
         epoch_num += 1
@@ -180,7 +180,7 @@ data_transforms = {
 }
 
 
-data_dir = './clean/AllSubjects/Ensemble2_StaticResNeXt101/data/'
+data_dir = './clean/Subject1_English/Ensemble2_English_StaticResNeXt101/data/'
 image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x),
                                           data_transforms[x])
                   for x in ['train', 'val']}
@@ -225,5 +225,5 @@ model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler,
 visualize_model(model_ft)
 
 
-final_model_name = './clean/AllSubjects/Ensemble2_StaticResNeXt101/models/StaticResNeXt101_10epoch.sav'
+final_model_name = './clean/Subject1_English/Ensemble2_English_StaticResNeXt101/models/StaticResNeXt101_Eng_10epoch.sav'
 pickle.dump(model_ft, open(final_model_name, 'wb'))
