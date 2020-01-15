@@ -6,27 +6,29 @@ library(doMC)
 registerDoMC(detectCores()-1)
 
 
-files <- list.files("./clean/AllSubjects/Ensemble1_English_LandsatResNeXt101/data/imagery/", full.names = TRUE)
+files <- list.files("./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/data/imagery/", full.names = TRUE)
 length(files)
 
-y1314 <- read.csv("./clean/AllSubjects/Ensemble1_English_LandsatResNeXt101/data/y1314_AllSubjects.csv")
+y1314 <- read.csv("./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/data/y1314_English.csv")
 fail <- y1314[y1314$intervention == 1,]
 pass <- y1314[y1314$intervention == 0,]
 
 
 foreach(i = 1:5875) %dopar% {  
 	
-  id <- base::substr(files[i], 63, 68)
+  id <- base::substr(files[i], 76, 81)
   rast <- raster::brick(files[i])
   school <- y1314[y1314$school_id == id,]
   int <- school$intervention
 	
-	print(id)
+#	print(id)
+#	print(school)
+#	print(int)
 
   if (int == 0) {
-      file_name <- paste("./clean/AllSubjects/Ensemble1_LandsatResNeXt101/data/pass/", id, "_", school$intervention, ".jpg", sep = '')
+      file_name <- paste("./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/data/pass/", id, "_", school$intervention, ".jpg", sep = '')
   } else if (int == 1) {
-      file_name <- paste("./clean/AllSubjects/Ensemble1_LandsatResNeXt101/data/fail/", id, "_", school$intervention, ".jpg", sep = '')
+      file_name <- paste("./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/data/fail/", id, "_", school$intervention, ".jpg", sep = '')
   }
   
   
@@ -34,7 +36,7 @@ foreach(i = 1:5875) %dopar% {
     
     {
 			
-			print(paste("saving file:", file_name))
+#			print(paste("saving file:", file_name))
       
       jpeg(file_name, width = 224, height = 224)
       plotRGB(rast,
@@ -55,8 +57,8 @@ foreach(i = 1:5875) %dopar% {
 }
 
 
-fail_files <- list.files("./clean/AllSubjects/Ensemble1_LandsatResNeXt101/data/fail/", full.names = TRUE)
-pass_files <- list.files("./clean/AllSubjects/Ensemble1_LandsatResNeXt101/data/pass/", full.names = TRUE)
+fail_files <- list.files("./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/data/fail/", full.names = TRUE)
+pass_files <- list.files("./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/data/pass/", full.names = TRUE)
 
 length(fail_files)
 length(pass_files)

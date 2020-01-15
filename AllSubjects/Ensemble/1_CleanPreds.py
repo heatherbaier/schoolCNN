@@ -61,4 +61,4 @@ comb = pd.merge(landsat_preds, static, on = 'school_id')
 comb.head()
 comb.shape
 
-comb.to_csv("./clean/AllSubjects/Ensemble/data/EnsemblePreds.csv", index = False)
+#comb.to_csv("./clean/AllSubjects/Ensemble/data/EnsemblePreds.csv", index = False)

@@ -61,3 +61,8 @@ spdf <- SpatialPointsDataFrame(coords, final_df, proj4string = CRS("+proj=longla
 writeOGR(spdf, dsn = "./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/data/shp/y1314_English_sp.shp", layer = "y1314_English_sp", driver = "ESRI Shapefile", overwrite_layer = TRUE)
 
 
+
+
+
+length(list.files("./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/data/pass/"))
+length(list.files("./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/data/fail/"))
