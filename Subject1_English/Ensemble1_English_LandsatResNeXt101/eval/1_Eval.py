@@ -48,8 +48,8 @@ class ImgAugTransform:
     return self.aug.augment_image(img)
 
 
-model_ft = joblib.load("./clean/Subject1_English/Ensemble2_English_StaticResNeXt101/models/StaticResNeXt101_Eng_10epoch.sav")
-directory = "./clean/Subject1_English/Ensemble2_English_StaticResNeXt101/data/pass/"
+model_ft = joblib.load("./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/models/LandsatResNeXt101_English_10epoch.sav")
+directory = "./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/data/pass/"
 transform = transforms.Compose([
 	ImgAugTransform(),
 	transforms.ToTensor(),
@@ -90,8 +90,8 @@ pass_preds.to_csv("./clean/Subject1_English/Ensemble/data/LandsatPassPreds.csv")
 
 
 
-model_ft = joblib.load("./clean/Subject1_English/Ensemble2_English_StaticResNeXt101/models/StaticResNeXt101_Eng_10epoch.sav")
-directory = "./clean/Subject1_English/Ensemble2_English_StaticResNeXt101/data/fail/"
+model_ft = joblib.load("./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/models/LandsatResNeXt101_English_10epoch.sav")
+directory = "./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/data/fail/"
 transform = transforms.Compose([
 	ImgAugTransform(),
 	transforms.ToTensor(),

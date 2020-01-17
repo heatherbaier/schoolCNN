@@ -21,7 +21,7 @@ plt.ion()   # interactive mode
 
 def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
 
-    epoch_num = 5
+    epoch_num = 0
 
     since = time.time()
 
@@ -80,7 +80,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
                 best_model_wts = copy.deepcopy(model.state_dict())
 
                 # Save each epoch that achieves a higher accuracy than the current best_acc in case the model crashes mid-training
-                model_name = './clean/AllSubjects/Ensemble3_StreetViewResNet152/epochs/StreetViewResNeXt101_Retrain_Epoch' + str(epoch_num) + '.sav'
+                model_name = './clean/Subject1_English/Ensemble3_English_StreetViewResNeXt101/epochs/StreetViewResNeXt101_English_Epoch' + str(epoch_num) + '.sav'
                 pickle.dump(model, open(model_name, 'wb'))
 
         epoch_num += 1
@@ -180,7 +180,7 @@ data_transforms = {
 }
 
 
-data_dir = './clean/AllSubjects/Ensemble3_StreetViewResNet152/data/'
+data_dir = './clean/Subject1_English/Ensemble3_English_StreetViewResNeXt101/data/'
 image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x),
                                           data_transforms[x])
                   for x in ['train', 'val']}
@@ -202,8 +202,7 @@ out = torchvision.utils.make_grid(inputs)
 imshow(out, title=[class_names[x] for x in classes])
 
 
-#model_ft = models.resnext101_32x8d(pretrained=True)
-model_ft = joblib.load("./clean/AllSubjects/Ensemble3_StreetViewResNet152/epochs/StreetViewResNeXt101_Epoch4.sav")
+model_ft = models.resnext101_32x8d(pretrained=True)
 num_ftrs = model_ft.fc.in_features
 # Here the size of each output sample is set to 2.
 # Alternatively, it can be generalized to nn.Linear(num_ftrs, len(class_names)).
@@ -221,10 +220,10 @@ exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=7, gamma=0.1)
 
 
 model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler,
-                       num_epochs=5)
+                       num_epochs=10)
 
 visualize_model(model_ft)
 
 
-final_model_name = './clean/AllSubjects/Ensemble3_StreetViewResNet152/models/StreetViewResNeXt101_10epoch.sav'
+final_model_name = './clean/Subject1_English/Ensemble3_English_StreetViewResNeXt101/models/StreetViewResNeXt101_English_10epoch.sav'
 pickle.dump(model_ft, open(final_model_name, 'wb'))
