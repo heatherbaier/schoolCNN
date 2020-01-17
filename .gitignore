@@ -21,3 +21,15 @@ Subject1_English/Ensemble2_English_StaticResNeXt101/models/
 Subject1_English/Ensemble3_English_StreetViewResNeXt101/data/
 Subject1_English/Ensemble3_English_StreetViewResNeXt101/epochs/
 Subject1_English/Ensemble3_English_StreetViewResNeXt101/models/
+
+Subject2_Filipino/E1_Fil_Landsat/data/
+Subject2_Filipino/E1_Fil_Landsat/models/
+Subject2_Filipino/E1_Fil_Landsat/epochs/
+
+Subject2_Filipino/E2_Fil_Static/data/
+Subject2_Filipino/E2_Fil_Static/models/
+Subject2_Filipino/E2_Fil_Static/epochs/
+
+Subject2_Filipino/E3_Fil_StreetView/data/
+Subject2_Filipino/E3_Fil_StreetView/models/
+Subject2_Filipino/E3_Fil_StreetView/epochs/
