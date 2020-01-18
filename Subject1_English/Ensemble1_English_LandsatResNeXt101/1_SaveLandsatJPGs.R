@@ -6,7 +6,7 @@ library(doMC)
 registerDoMC(detectCores()-1)
 
 
-files <- list.files("./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/data/imagery/", full.names = TRUE)
+files <- list.files("./clean/AllSubjects/Ensemble1_LandsatResNeXt101/data/imagery/", full.names = TRUE)
 length(files)
 
 y1314 <- read.csv("./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/data/y1314_English.csv")
@@ -16,7 +16,7 @@ pass <- y1314[y1314$intervention == 0,]
 
 foreach(i = 1:5875) %dopar% {  
 	
-  id <- base::substr(files[i], 76, 81)
+  id <- base::substr(files[i], 63, 68)
   rast <- raster::brick(files[i])
   school <- y1314[y1314$school_id == id,]
   int <- school$intervention
