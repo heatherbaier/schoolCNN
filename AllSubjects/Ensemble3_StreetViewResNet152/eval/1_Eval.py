@@ -58,27 +58,29 @@ transform = transforms.Compose([
 
 
 def EvalModel(model, directory, transforms):
-	
 	df = pd.DataFrame()
-	cpass, cfail, ids, class_pred = [], [], [], []
+	cpass, cfail, ids, h = [], [], [], []
 	count = 0
 	for filename in os.listdir(directory):
-			count += 1
-			school_id = filename[0:6]
-			ids.append(school_id)
-			to_open = directory + filename
-			png = Image.open(to_open)
-			img_t = transform(png)
-			batch_t = torch.unsqueeze(img_t, 0)
-			model_ft.eval()
-			out = model_ft(batch_t)
-			_, index = torch.max(out, 1)
-			percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100
-#			print(percentage)
-			cfail.append(percentage[0].tolist())
-			cpass.append(percentage[1].tolist())
-			print("Predicted " + str(count) + " out of " + str(len(os.listdir(directory))) + " images." )
+		count += 1
+		school_id = filename[0:6]
+		ids.append(school_id)
+		heading = filename[10:13]
+		h.append(heading)
+		to_open = directory + filename
+		png = Image.open(to_open)
+		img_t = transform(png)
+		batch_t = torch.unsqueeze(img_t, 0)
+		model_ft.eval()
+		out = model_ft(batch_t)
+		_, index = torch.max(out, 1)
+		percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100
+		#			print(percentage)
+		cfail.append(percentage[0].tolist())
+		cpass.append(percentage[1].tolist())
+		print("Predicted " + str(count) + " out of " + str(len(os.listdir(directory))) + " images." )
 	df['school_id'] = ids
+	df['heading'] = h
 	df['prob_fail'] = cfail
 	df['prob_pass'] = cpass
 	return df
@@ -89,5 +91,16 @@ static_preds = EvalModel(model_ft, directory, transform)
 static_preds.to_csv("./clean/AllSubjects/Ensemble/data/StreetViewPreds.csv")
 
 
+sv = pd.read_csv("./clean/AllSubjects/Ensemble/data/StreetViewPreds.csv")
+
+h = []
+
+for filename in os.listdir(directory):
+	heading = filename[10:13]
+	h.append(heading)
+
+sv['heading'] = h
+
+sv.to_csv("./clean/AllSubjects/Ensemble/data/StreetViewPreds_v2.csv")
 
 

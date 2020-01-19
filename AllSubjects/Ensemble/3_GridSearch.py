@@ -10,7 +10,7 @@ import numpy as np
 
 
 dta = pd.read_csv("./clean/AllSubjects/Ensemble/data/EnsemblePreds.csv")
-dta = dta.drop(['school_id'], axis = 1)
+#dta = dta.drop(['school_id'], axis = 1)
 dta.head()
 
 # Train Test split the data
