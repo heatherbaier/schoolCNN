@@ -9,26 +9,26 @@ registerDoMC(detectCores()-1)
 files <- list.files("./clean/AllSubjects/Ensemble1_LandsatResNeXt101/data/imagery/", full.names = TRUE)
 length(files)
 
-y1314 <- read.csv("./clean/Subject2_Filipino/E1_Fil_Landsat/data/y1314_English.csv")
+y1314 <- read.csv("./clean/Subject3_Math/E1_Math_Landsat/data/y1314_Math.csv")
 fail <- y1314[y1314$intervention == 1,]
 pass <- y1314[y1314$intervention == 0,]
 
 
-foreach(i = 1:5875) %dopar% {  
+for (i in 1:5875) {  
 	
   id <- base::substr(files[i], 63, 68)
   rast <- raster::brick(files[i])
   school <- y1314[y1314$school_id == id,]
   int <- school$intervention
 	
-	print(id)
+#	print(id)
 #	print(school)
 #	print(int)
 
   if (int == 0) {
-      file_name <- paste("./clean/Subject2_Filipino/E1_Fil_Landsat/data/pass/", id, "_", school$intervention, ".jpg", sep = '')
+      file_name <- paste("./clean/Subject3_Math/E1_Math_Landsat/data/pass/", id, "_", school$intervention, ".jpg", sep = '')
   } else if (int == 1) {
-      file_name <- paste("./clean/Subject2_Filipino/E1_Fil_Landsat/data/fail/", id, "_", school$intervention, ".jpg", sep = '')
+      file_name <- paste("./clean/Subject3_Math/E1_Math_Landsat/data/fail/", id, "_", school$intervention, ".jpg", sep = '')
   }
   
   
@@ -55,8 +55,8 @@ foreach(i = 1:5875) %dopar% {
 }
 
 
-fail_files <- list.files("./clean/Subject2_Filipino/E1_Fil_Landsat/data/fail/", full.names = TRUE)
-pass_files <- list.files("./clean/Subject2_Filipino/E1_Fil_Landsat/data/pass/", full.names = TRUE)
+fail_files <- list.files("./clean/Subject3_Math/E1_Math_Landsat/data/fail/", full.names = TRUE)
+pass_files <- list.files("./clean/Subject3_Math/E1_Math_Landsat/data/pass/", full.names = TRUE)
 
 length(fail_files)
 length(pass_files)

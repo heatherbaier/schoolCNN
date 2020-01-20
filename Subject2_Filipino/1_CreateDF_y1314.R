@@ -48,9 +48,9 @@ final_df <- final_df[cols]
 head(final_df)
 
 # Write final CSV
-write.csv(final_df, "./clean/Subject2_Filipino/E1_Fil_Landsat/data/y1314_English.csv", row.names=FALSE)
-write.csv(final_df, "./clean/Subject2_Filipino/E2_Fil_Static/data/y1314_English.csv", row.names=FALSE)
-write.csv(final_df, "./clean/Subject2_Filipino/E3_Fil_StreetView/data/y1314_English.csv", row.names=FALSE)
+write.csv(final_df, "./clean/Subject2_Filipino/E1_Fil_Landsat/data/y1314_Filipino.csv", row.names=FALSE)
+write.csv(final_df, "./clean/Subject2_Filipino/E2_Fil_Static/data/y1314_Filipino.csv", row.names=FALSE)
+write.csv(final_df, "./clean/Subject2_Filipino/E3_Fil_StreetView/data/y1314_Filipino.csv", row.names=FALSE)
 
 # Create shapefile
 coords <- cbind(final_df$longitude, final_df$latitude)

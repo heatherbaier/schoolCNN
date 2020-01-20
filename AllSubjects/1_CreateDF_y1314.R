@@ -10,6 +10,8 @@ df6 <- read.csv("./clean/AllSubjects/Ensemble2_StaticResNeXt101/data/y13-14_g6.c
 # Calculate the overall mean of NAT scores per school
 df6$mean <- df6$overall_mean_rs / 5
 
+kmeans_overall <- classIntervals(df6$mean, 2, style = "kmeans")
+
 hist(df6$mean)
 
 range(df6$mean)
