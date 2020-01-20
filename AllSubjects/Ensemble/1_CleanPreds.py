@@ -105,7 +105,7 @@ coords = pd.read_csv("./clean/AllSubjects/Ensemble/data/this_one.csv")
 coords = coords.drop_duplicates(subset = 'school_id')
 coords = coords[coords['school_id'].isin(comb['school_id'].tolist())]
 #coords.to_csv("./clean/AllSubjects/Ensemble/data/this_one.csv")
-coords = coords[['school_id', 'region']]
+coords = coords[['school_id', 'region', 'province']]
 comb = pd.merge(comb, coords, how = "left", on = 'school_id')
 comb.head()
 comb.shape
@@ -124,8 +124,9 @@ comb.shape
 
 discreteCoder_X = LabelEncoder()
 comb['region'] = discreteCoder_X.fit_transform(comb['region'])
+comb['province'] = discreteCoder_X.fit_transform(comb['province'])
 
-
+comb.head()
 
 
 

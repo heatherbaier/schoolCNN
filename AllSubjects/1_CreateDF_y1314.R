@@ -10,9 +10,9 @@ df6 <- read.csv("./clean/AllSubjects/Ensemble2_StaticResNeXt101/data/y13-14_g6.c
 # Calculate the overall mean of NAT scores per school
 df6$mean <- df6$overall_mean_rs / 5
 
-hist(df6$overall_mean_rs)
+hist(df6$mean)
 
-range(df6$overall_mean_rs)
+range(df6$mean)
 
 # Subset columns
 final_df6 <- df6[c("school_id","overall_mean_rs")]
