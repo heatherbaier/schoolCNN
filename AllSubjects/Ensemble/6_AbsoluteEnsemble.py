@@ -91,7 +91,7 @@ final_df['predicted_class'] = 9
 final_df['predicted_class'][final_df['predicted_mean'] >= 27.221] = 0
 final_df['predicted_class'][final_df['predicted_mean'] < 27.221] = 1
 
-final_df['correct'] = 0
+final_df["correct"] = 0
 final_df["correct"][(final_df['intervention'] == 0) & (final_df["predicted_class"] == 0)] = 1
 final_df["correct"][(final_df['intervention'] == 1) & (final_df["predicted_class"] == 1)] = 1
 
@@ -103,9 +103,10 @@ final_df = final_df.drop(['predicted_class', 'correct'], axis = 1)
 
 
 
+df = pd.read_csv("./clean/AllSubjects/Ensemble/data/initial_absolute.csv")
 
-
-
+plt.xlim([0, 40])
+plt.scatter(df['predicted_mean'], df['actual_mean'])
 
 
 
