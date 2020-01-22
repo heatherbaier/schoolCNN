@@ -1,18 +1,17 @@
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 
-
-dta = pd.read_csv("./clean/Subject1_English/Ensemble2_English_StaticResNeXt101/data/y1314_English.csv")
+dta = pd.read_csv("./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/data/y1314_English.csv")
 dta = dta.drop(['english_mean', 'latitude', 'longitude'], axis = 1)
 dta.head()
 
-## Landsat
-landsat_pass = pd.read_csv("./clean/AllSubjects/Ensemble/data/LandsatPassPreds.csv")
+# Landsat
+landsat_pass = pd.read_csv("./clean/Subject1_English/Ensemble/data/LandsatPassPreds.csv")
 landsat_pass = landsat_pass.drop(['Unnamed: 0'], axis = 1)
 landsat_pass.head()
 landsat_pass.shape
 
-landsat_fail = pd.read_csv("./clean/AllSubjects/Ensemble/data/LandsatFailPreds.csv")
+landsat_fail = pd.read_csv("./clean/Subject1_English/Ensemble/data/LandsatFailPreds.csv")
 landsat_fail = landsat_fail.drop(['Unnamed: 0'], axis = 1)
 landsat_fail.head()
 landsat_fail.shape
@@ -51,6 +50,44 @@ static['intervention'].value_counts()
 static['correct'].value_counts()
 
 
+sv = pd.read_csv("./clean/Subject1_English/Ensemble/data/StreetViewPreds.csv")
+sv = sv.drop(['Unnamed: 0'], axis = 1)
+sv.head()
+
+# Split along headings
+h230 = sv[sv['heading'] == 230.0]
+h50 = sv[sv['heading'] == 50.0]
+h140 = sv[sv['heading'] == 140.0]
+h330 = sv[sv['heading'] == 330.0]
+
+h230 = h230[['school_id', 'prob_fail']]
+h50 = h50[['school_id', 'prob_fail']]
+h140 = h140[['school_id', 'prob_fail']]
+h330 = h330[['school_id', 'prob_fail']]
+
+h230.columns = ['school_id', 'h230_fail_pred']
+h50.columns = ['school_id', 'h50_fail_pred']
+h140.columns = ['school_id', 'h140_fail_pred']
+h330.columns = ['school_id', 'h330_fail_pred']
+
+#h230.columns = ['school_id', 'h230_pass_pred']
+#h50.columns = ['school_id', 'h50_pass_pred']
+#h140.columns = ['school_id', 'h140_pass_pred']
+#h330.columns = ['school_id', 'h330_pass_pred']
+
+#sv_preds = sv[['school_id','label']]
+#sv_preds = sv_preds.drop_duplicates(subset = 'school_id')
+
+merged = pd.merge(h50, h140, on = 'school_id')
+merged = pd.merge(merged, h230, on = 'school_id')
+merged = pd.merge(merged, h330, on = 'school_id')
+#merged = pd.merge(merged, preds, on = 'school_id')
+merged.head()
+
+
+
+
+
 # Prep for Ensemble
 landsat_preds = landsat_preds.drop(['correct', 'prob_pass', 'landsat_class_pred', 'intervention'], axis = 1)
 static = static.drop(['correct', 'prob_pass', 'static_class_pred'], axis = 1)
@@ -58,11 +95,10 @@ static = static.drop(['correct', 'prob_pass', 'static_class_pred'], axis = 1)
 landsat_preds.columns = ['school_id', 'landsat_prob_fail']
 static.columns = ['school_id', 'static_prob_fail', 'intervention']
 
+
 comb = pd.merge(landsat_preds, static, on = 'school_id')
-comb.head()
-comb.shape
-
-
+comb = pd.merge(comb, merged, how = "left", on = 'school_id')
+comb = comb.fillna(-1)
 
 
 # Merge with geo data
@@ -74,6 +110,18 @@ coords = coords[['school_id', 'region', 'province']]
 comb = pd.merge(comb, coords, how = "left", on = 'school_id')
 comb.head()
 comb.shape
+
+## Merge with SNI data
+#sni = pd.read_csv("./clean/AllSubjects/Ensemble/data/15-16_pfrontiers_sorted_v2.csv")
+#sni = sni.drop_duplicates(subset = 'school_id')
+#sni = sni[sni['school_id'].isin(comb['school_id'].tolist())]
+#sni = sni[['school_id', 'rank']]
+#sni.shape
+#comb = pd.merge(comb, sni, how = "left", on = 'school_id')
+#comb.head()
+#comb.shape
+
+
 
 discreteCoder_X = LabelEncoder()
 comb['region'] = discreteCoder_X.fit_transform(comb['region'])
