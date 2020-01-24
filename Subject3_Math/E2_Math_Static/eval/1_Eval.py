@@ -48,8 +48,8 @@ class ImgAugTransform:
     return self.aug.augment_image(img)
 
 
-model_ft = joblib.load("./clean/Subject2_Filipino/E3_Fil_StreetView/models/realreal/StreetViewResNeXt101_Filipino_10epoch.sav")
-directory = "./clean/AllSubjects/Ensemble3_StreetViewResNet152/data/imagery/"
+model_ft = joblib.load("./clean/Subject3_Math/E2_Math_Static/models/StaticResNeXt101_Math_50epoch.sav")
+directory = "./clean/AllSubjects/Ensemble2_StaticResNeXt101/data/jpg/"
 transform = transforms.Compose([
 	ImgAugTransform(),
 	transforms.ToTensor(),
@@ -60,40 +60,32 @@ transform = transforms.Compose([
 def EvalModel(model, directory, transforms):
 	model = model.cuda()
 	df = pd.DataFrame()
-	cpass, cfail, ids, h = [], [], [], []
+	cpass, cfail, ids, class_pred = [], [], [], []
 	count = 0
 	for filename in os.listdir(directory):
-		count += 1
-		school_id = filename[0:6]
-		ids.append(school_id)
-		heading = filename[10:13]
-		h.append(heading)
-		to_open = directory + filename
-		png = Image.open(to_open)
-		img_t = transform(png)
-		batch_t = torch.unsqueeze(img_t, 0).cuda()
-		model.eval()
-		out = model(batch_t)
-		_, index = torch.max(out, 1)
-		percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100
-		#			print(percentage)
-		cfail.append(percentage[0].tolist())
-		cpass.append(percentage[1].tolist())
-		print("Predicted " + str(count) + " out of " + str(len(os.listdir(directory))) + " images." )
+			count += 1
+			school_id = filename[0:6]
+			ids.append(school_id)
+			to_open = directory + filename
+			png = Image.open(to_open)
+			img_t = transform(png)
+			batch_t = torch.unsqueeze(img_t, 0).cuda()
+			model_ft.eval()
+			out = model_ft(batch_t)
+			_, index = torch.max(out, 1)
+			percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100
+#			print(percentage)
+			cfail.append(percentage[0].tolist())
+			cpass.append(percentage[1].tolist())
+			print("Predicted " + str(count) + " out of " + str(len(os.listdir(directory))) + " images." )
 	df['school_id'] = ids
-	df['heading'] = h
 	df['prob_fail'] = cfail
 	df['prob_pass'] = cpass
 	return df
 
 
 
-static_preds = EvalModel(model_ft, directory, transform)
-static_preds.head()
-static_preds.to_csv("./clean/Subject2_Filipino/Ensemble/data/StreetViewPreds.csv")
-
-
-
-
-
+allpreds = EvalModel(model_ft, directory, transform)
+allpreds.head()
+allpreds.to_csv("./clean/Subject3_Math/Ensemble/data/StaticPreds.csv")
 

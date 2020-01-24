@@ -4,7 +4,7 @@ library(rgdal)
 library(sp)
 
 # Read in Grade 6 and 10 data
-df6 <- read.csv("./clean/Subject2_Filipino//y13-14_g6.csv")
+df6 <- read.csv("./clean/Subject3_Math/E2_Math_Static/data/y13-14_g6.csv")
 head(df6)
 
 # Calculate the overall mean of NAT scores per school
