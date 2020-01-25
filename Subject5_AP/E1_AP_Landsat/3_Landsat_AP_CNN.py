@@ -80,7 +80,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
                 best_model_wts = copy.deepcopy(model.state_dict())
 
                 # Save each epoch that achieves a higher accuracy than the current best_acc in case the model crashes mid-training
-                model_name = './clean/AllSubjects/Ensemble1_LandsatResNeXt101/epochs/gpu/LandsatResNeXt101_Epoch' + str(epoch_num) + '.sav'
+                model_name = './clean/Subject5_AP/E1_AP_Landsat/epochs/Landsat_AP_Epoch' + str(epoch_num) + '.sav'
                 pickle.dump(model, open(model_name, 'wb'))
 
         epoch_num += 1
@@ -180,7 +180,7 @@ data_transforms = {
 }
 
 
-data_dir = './clean/AllSubjects/Ensemble1_LandsatResNeXt101/data/'
+data_dir = './clean/Subject5_AP/E1_AP_Landsat/data/'
 image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x),
                                           data_transforms[x])
                   for x in ['train', 'val']}
@@ -224,5 +224,5 @@ model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler, num_
 visualize_model(model_ft)
 
 
-final_model_name = './clean/AllSubjects/Ensemble1_LandsatResNeXt101/models/gpu/LandsatResNeXt101_10epoch.sav'
+final_model_name = './clean/Subject5_AP/E1_AP_Landsat/models/Landsat_AP_50epoch.sav'
 pickle.dump(model_ft, open(final_model_name, 'wb'))
