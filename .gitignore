@@ -51,23 +51,23 @@ Subject4_Science/E1_Sci_Landsat/data/
 Subject4_Science/E1_Sci_Landsat/epochs/
 Subject4_Science/E1_Sci_Landsat/models/
 
-Subject4_Science/E1_Sci_Static/data/
-Subject4_Science/E1_Sci_Static/epochs/
-Subject4_Science/E1_Sci_Static/models/
+Subject4_Science/E2_Sci_Static/data/
+Subject4_Science/E2_Sci_Static/epochs/
+Subject4_Science/E2_Sci_Static/models/
 
-Subject4_Science/E1_Sci_StreetView/data/
-Subject4_Science/E1_Sci_StreetView/epochs/
-Subject4_Science/E1_Sci_StreetView/models/
+Subject4_Science/E3_Sci_StreetView/data/
+Subject4_Science/E3_Sci_StreetView/epochs/
+Subject4_Science/E3_Sci_StreetView/models/
 
 
 Subject5_AP/E1_AP_Landsat/data/
 Subject5_AP/E1_AP_Landsat/epochs/
 Subject5_AP/E1_AP_Landsat/models/
 
-Subject5_AP/E1_AP_Static/data/
-Subject5_AP/E1_AP_Static/epochs/
-Subject5_AP/E1_AP_Static/models/
+Subject5_AP/E2_AP_Static/data/
+Subject5_AP/E2_AP_Static/epochs/
+Subject5_AP/E2_AP_Static/models/
 
-Subject5_AP/E1_AP_StreetView/data/
-Subject5_AP/E1_AP_StreetView/epochs/
-Subject5_AP/E1_AP_StreetView/models/
+Subject5_AP/E3_AP_StreetView/data/
+Subject5_AP/E3_AP_StreetView/epochs/
+Subject5_AP/E3_AP_StreetView/models/
