@@ -48,9 +48,9 @@ final_df <- final_df[cols]
 head(final_df)
 
 # Write final CSV
-write.csv(final_df, "./clean/Subject2_Filipino/E1_Fil_Landsat/data/y1314_English.csv", row.names=FALSE)
-write.csv(final_df, "./clean/Subject2_Filipino/E2_Fil_Static/data/y1314_English.csv", row.names=FALSE)
-write.csv(final_df, "./clean/Subject2_Filipino/E3_Fil_StreetView/data/y1314_English.csv", row.names=FALSE)
+write.csv(final_df, "./clean/Subject4_Science/E1_Sci_Landsat/data/y1314_Science.csv", row.names=FALSE)
+write.csv(final_df, "./clean/Subject4_Science/E1_Sci_Static/data/y1314_Science.csv", row.names=FALSE)
+write.csv(final_df, "./clean/Subject4_Science/E1_Sci_StreetView/data/y1314_Science.csv", row.names=FALSE)
 
 # Create shapefile
 coords <- cbind(final_df$longitude, final_df$latitude)
@@ -58,7 +58,7 @@ sp <- SpatialPoints(coords)
 spdf <- SpatialPointsDataFrame(coords, final_df, proj4string = CRS("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"))
 
 # Write shapefile
-writeOGR(spdf, dsn = "./clean/Subject2_Filipino/E1_Fil_Landsat/data/shp/y1314_Filipino_sp.shp", layer = "y1314_Filipino_sp", driver = "ESRI Shapefile", overwrite_layer = TRUE)
+writeOGR(spdf, dsn = "./clean/Subject4_Science/E1_Sci_Landsat/data/shp/y1314_Science_sp.shp", layer = "y1314_Science_sp", driver = "ESRI Shapefile", overwrite_layer = TRUE)
 
 
 
