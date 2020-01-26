@@ -80,7 +80,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
                 best_model_wts = copy.deepcopy(model.state_dict())
 
                 # Save each epoch that achieves a higher accuracy than the current best_acc in case the model crashes mid-training
-                model_name = './clean/Subject3_Math/E1_Math_Landsat/epochs/LandsatResNeXt101_Math_Epoch' + str(epoch_num) + '.sav'
+                model_name = './clean/Subject3_Math/E1_Math_Landsat/epochs/gpu/LandsatResNeXt101_Math_Epoch' + str(epoch_num) + '.sav'
                 pickle.dump(model, open(model_name, 'wb'))
 
         epoch_num += 1
@@ -219,10 +219,10 @@ optimizer_ft = optim.SGD(model_ft.parameters(), lr=0.001, momentum=0.9)
 exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=7, gamma=0.1)
 
 
-model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler, num_epochs=10)
+model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler, num_epochs=50)
 
 visualize_model(model_ft)
 
 
-final_model_name = './clean/Subject3_Math/E1_Math_Landsat/models/LandsatResNeXt101_Math_10epoch.sav'
+final_model_name = './clean/Subject3_Math/E1_Math_Landsat/models/gpu/LandsatResNeXt101_Math_50epoch.sav'
 pickle.dump(model_ft, open(final_model_name, 'wb'))

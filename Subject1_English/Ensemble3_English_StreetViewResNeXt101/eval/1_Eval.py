@@ -48,7 +48,7 @@ class ImgAugTransform:
     return self.aug.augment_image(img)
 
 
-model_ft = joblib.load("./clean/Subject1_English/Ensemble3_English_StreetViewResNeXt101/models/StreetViewResNeXt101_English_10epoch.sav")
+model_ft = joblib.load("./clean/Subject1_English/Ensemble3_English_StreetViewResNeXt101/models/gpu/")
 directory = "./clean/AllSubjects/Ensemble3_StreetViewResNet152/data/imagery/"
 transform = transforms.Compose([
 	ImgAugTransform(),

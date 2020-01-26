@@ -6,7 +6,7 @@ library(doMC)
 registerDoMC(detectCores()-1)
 
 
-files <- list.files("./clean/Subject1_English/Ensemble2_English_StaticResNeXt101/data/imagery/", full.names = TRUE)	
+files <- list.files("./clean/AllSubjects/Ensemble2_StaticResNeXt101/data/imagery/", full.names = TRUE)	
 length(files)
 
 y1314 <- read.csv("./clean/Subject1_English/Ensemble2_English_StaticResNeXt101/data/y1314_English.csv")
@@ -15,7 +15,7 @@ table(y1314$intervention)
 
 for (i in 1:5875) {
   
-  id <- base::substr(files[i], 75, 80)
+  id <- base::substr(files[i], 62, 67)
   school <- subset(y1314, school_id == as.numeric(id))
   int <- school$intervention
   

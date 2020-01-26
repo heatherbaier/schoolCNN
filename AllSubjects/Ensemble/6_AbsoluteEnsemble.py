@@ -141,3 +141,4 @@ final_df['predicted_mean'].mean()
 final_df['actual_mean'].std()
 final_df['predicted_mean'].std()
 
+final_df['correct'].value_counts()

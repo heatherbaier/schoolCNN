@@ -48,8 +48,8 @@ class ImgAugTransform:
     return self.aug.augment_image(img)
 
 
-model_ft = joblib.load("./clean/Subject1_English/Ensemble2_English_StaticResNeXt101/models/StaticResNeXt101_Eng_10epoch.sav")
-directory = "./clean/Subject1_English/Ensemble2_English_StaticResNeXt101/data/jpg/"
+model_ft = joblib.load("./clean/Subject1_English/Ensemble2_English_StaticResNeXt101/models/gpu/StaticResNeXt101_Eng_50epoch.sav")
+directory = "./clean/AllSubjects/Ensemble2_StaticResNeXt101/data/jpg/"
 transform = transforms.Compose([
 	ImgAugTransform(),
 	transforms.ToTensor(),
@@ -58,7 +58,7 @@ transform = transforms.Compose([
 
 
 def EvalModel(model, directory, transforms):
-	
+	model = model.cuda()
 	df = pd.DataFrame()
 	cpass, cfail, ids, class_pred = [], [], [], []
 	count = 0
@@ -69,7 +69,7 @@ def EvalModel(model, directory, transforms):
 			to_open = directory + filename
 			png = Image.open(to_open)
 			img_t = transform(png)
-			batch_t = torch.unsqueeze(img_t, 0)
+			batch_t = torch.unsqueeze(img_t, 0).cuda()
 			model_ft.eval()
 			out = model_ft(batch_t)
 			_, index = torch.max(out, 1)
@@ -86,5 +86,5 @@ def EvalModel(model, directory, transforms):
 
 
 allpreds = EvalModel(model_ft, directory, transform)
-allpreds.to_csv("./clean/Subject1_English/Ensemble/data/StaticPreds.csv")
+allpreds.to_csv("./clean/Subject1_English/Ensemble/data/StaticPreds_GPU.csv")
 

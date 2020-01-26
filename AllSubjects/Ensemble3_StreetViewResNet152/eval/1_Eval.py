@@ -48,7 +48,7 @@ class ImgAugTransform:
     return self.aug.augment_image(img)
 
 
-model_ft = joblib.load("./clean/AllSubjects/Ensemble3_StreetViewResNet152/models/StreetViewResNeXt101_10epoch.sav")
+model_ft = joblib.load("./clean/AllSubjects/Ensemble3_StreetViewResNet152/models/gpu/StreetViewResNeXt101_50epoch.sav")
 directory = "./clean/AllSubjects/Ensemble3_StreetViewResNet152/data/imagery/"
 transform = transforms.Compose([
 	ImgAugTransform(),
@@ -58,6 +58,7 @@ transform = transforms.Compose([
 
 
 def EvalModel(model, directory, transforms):
+	model = model.cuda()
 	df = pd.DataFrame()
 	cpass, cfail, ids, h = [], [], [], []
 	count = 0
@@ -70,7 +71,7 @@ def EvalModel(model, directory, transforms):
 		to_open = directory + filename
 		png = Image.open(to_open)
 		img_t = transform(png)
-		batch_t = torch.unsqueeze(img_t, 0)
+		batch_t = torch.unsqueeze(img_t, 0).cuda()
 		model_ft.eval()
 		out = model_ft(batch_t)
 		_, index = torch.max(out, 1)
@@ -88,19 +89,11 @@ def EvalModel(model, directory, transforms):
 
 
 static_preds = EvalModel(model_ft, directory, transform)
-static_preds.to_csv("./clean/AllSubjects/Ensemble/data/StreetViewPreds.csv")
+static_preds.to_csv("./clean/AllSubjects/Ensemble/data/StreetViewPreds_GPU.csv")
 
 
 sv = pd.read_csv("./clean/AllSubjects/Ensemble/data/StreetViewPreds.csv")
 
-h = []
 
-for filename in os.listdir(directory):
-	heading = filename[10:13]
-	h.append(heading)
-
-sv['heading'] = h
-
-sv.to_csv("./clean/AllSubjects/Ensemble/data/StreetViewPreds_v2.csv")
 
 
