@@ -103,8 +103,6 @@ print('Bag MAD ' + str(bag_MAD))
 
 
 
-
-
 to_pred = dta.drop(['ap_mean'], axis = 1)
 preds = RF_regressionFit.predict(to_pred)
 
@@ -126,3 +124,4 @@ final_df['predicted_mean'].mean()
 final_df['actual_mean'].std()
 final_df['predicted_mean'].std()
 
+final_df.to_csv("./clean/Subject5_AP/Ensemble/data/PredictedAbsolute_AP.csv")

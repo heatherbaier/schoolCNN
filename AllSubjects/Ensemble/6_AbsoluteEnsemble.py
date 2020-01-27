@@ -22,7 +22,7 @@ df = pd.read_csv("./clean/AllSubjects/Ensemble1_LandsatResNeXt101/data/y1314_All
 df = df.drop(['intervention', 'latitude', 'longitude'], axis = 1)
 df['overall_mean'] = df['overall_mean'] / 5
 
-dta = pd.read_csv("./clean/AllSubjects/Ensemble/data/EnsemblePreds.csv")
+dta = pd.read_csv("./clean/AllSubjects/Ensemble/data/EnsemblePreds_GPU.csv")
 dta = pd.merge(dta, df, on = 'school_id')
 dta = dta.drop(['intervention'], axis = 1)
 dta.shape
@@ -119,19 +119,6 @@ final_df['intervention'] = dta['intervention_x']
 final_df['actual_mean'] = dta['overall_mean'] / 5
 final_df['predicted_mean'] = preds.tolist()
 final_df['error'] = abs(final_df['actual_mean'] - final_df['predicted_mean'])
-
-final_df['predicted_class'] = 9
-final_df['predicted_class'][final_df['predicted_mean'] >= 27.221] = 0
-final_df['predicted_class'][final_df['predicted_mean'] < 27.221] = 1
-
-final_df["correct"] = 0
-final_df["correct"][(final_df['intervention'] == 0) & (final_df["predicted_class"] == 0)] = 1
-final_df["correct"][(final_df['intervention'] == 1) & (final_df["predicted_class"] == 1)] = 1
-
-final_df.head()
-
-final_df = final_df.drop(['predicted_class', 'correct'], axis = 1)
-
 
 
 final_df['error'].mean()

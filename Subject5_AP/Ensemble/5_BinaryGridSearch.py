@@ -9,7 +9,7 @@ import pandas as pd
 import numpy as np
 
 
-dta = pd.read_csv("./clean/AllSubjects/Ensemble/data/EnsemblePreds.csv")
+dta = pd.read_csv("./clean/Subject5_AP/Ensemble/data/EnsemblePreds_GPU.csv")
 #dta = dta.drop(['school_id'], axis = 1)
 dta.head()
 
@@ -27,12 +27,16 @@ x_test = test
 
 
 # Random Forest Grid Search
-rForest = RandomForestClassifier(n_estimators = 1000, random_state=1693, max_depth=3).fit(x_train, y_train)
+rForest = RandomForestClassifier().fit(x_train, y_train)
 Z = rForest.predict(x_test)
 1 - (sum(abs(Z - y_test)) / len(y_test))
 
 params = [{'n_estimators':[10, 20, 250, 500, 750, 800, 900, 1000, 1100, 1200, 1250, 1500, 2980, 2990],
-            'max_depth':[1,2,3,4,5,6,7,8,9,10]}]
+           'max_depth':[None,1,2,3,4,5,6,7,8,9,10],
+					 'criterion':['gini', 'entropy'],
+					 'min_samples_split':[2,3,4,5],
+           'min_samples_leaf':[1,2,3,4,5],
+					 'max_features': ['auto', 'sqrt', 'log2']}]
 
 gSearch = GridSearchCV(estimator = rForest, 
                        param_grid = params,
@@ -46,13 +50,15 @@ gSearch_results.best_score_
 
 
 # Nearest Neighbors Grid Search
-NNeighbors = KNeighborsClassifier(n_neighbors=10).fit(x_train, y_train)
+NNeighbors = KNeighborsClassifier().fit(x_train, y_train)
 Z = NNeighbors.predict(x_test)
 1 - (sum(abs(Z - y_test)) / len(y_test))
 
-params = [{'n_neighbors':[1,2,3,4,5,6,7,8,9,10],
-            'weights':['uniform', 'distance'], 
-            'leaf_size':[10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40]}]
+params = [{'n_neighbors': [1,2,3,4,5,6,7,8,9,10],
+           'weights': ['uniform', 'distance'], 
+           'leaf_size': [10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40],
+					 'algorithm': ['auto', 'ball_tree', 'kd_tree', 'brute'],
+					 'p':[1,2]}]
 
 gSearch = GridSearchCV(estimator = NNeighbors, 
                        param_grid = params,
@@ -66,14 +72,16 @@ gSearch_results.best_score_
 
 
 # Decision Tree Grid Search
-dTree = DecisionTreeClassifier(random_state = 1693).fit(x_train, y_train)
+dTree = DecisionTreeClassifier().fit(x_train, y_train)
 Z = dTree.predict(x_test)
 1 - (sum(abs(Z - y_test)) / len(y_test))
 
 params = [{'criterion':['gini', 'entropy'],
-            'max_depth':[1,2,3,4,5,6,7,8,9,10],
-            'min_samples_split':[2,3,4,5],
-            'min_samples_leaf':[1,2,3,4,5]}]
+					 'splitter':['best', 'random'],
+           'max_depth':[None, 1,2,3,4,5,6,7,8,9,10],
+           'min_samples_split':[2,3,4,5],
+           'min_samples_leaf':[1,2,3,4,5],
+					 'max_features': ['auto', 'sqrt', 'log2']}]
 
 gSearch = GridSearchCV(estimator = dTree, 
                        param_grid = params,

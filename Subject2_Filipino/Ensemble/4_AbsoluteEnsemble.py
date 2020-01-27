@@ -119,24 +119,12 @@ final_df['actual_mean'] = dta['filipino_mean']
 final_df['predicted_mean'] = preds.tolist()
 final_df['error'] = abs(final_df['actual_mean'] - final_df['predicted_mean'])
 
-final_df['predicted_class'] = 9
-final_df['predicted_class'][final_df['predicted_mean'] >= 27.221] = 0
-final_df['predicted_class'][final_df['predicted_mean'] < 27.221] = 1
-
-final_df["correct"] = 0
-final_df["correct"][(final_df['intervention'] == 0) & (final_df["predicted_class"] == 0)] = 1
-final_df["correct"][(final_df['intervention'] == 1) & (final_df["predicted_class"] == 1)] = 1
-
-final_df.head()
-
-final_df = final_df.drop(['predicted_class', 'correct'], axis = 1)
-
-
-
 final_df['error'].mean()
 final_df['error'].std()
 final_df['actual_mean'].mean()
 final_df['predicted_mean'].mean()
 final_df['actual_mean'].std()
 final_df['predicted_mean'].std()
+
+final_df.to_csv("./clean/Subject2_Filipino/Ensemble/data/PredictedAbsolute_Filipino.csv")
 

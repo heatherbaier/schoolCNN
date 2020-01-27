@@ -126,3 +126,4 @@ final_df['predicted_mean'].mean()
 final_df['actual_mean'].std()
 final_df['predicted_mean'].std()
 
+final_df.to_csv("./clean/Subject4_Science/Ensemble/data/PredictedAbsolute_Science.csv")
