@@ -5,7 +5,7 @@ dta = pd.read_csv("./clean/Subject3_Math/E1_Math_Landsat/data/y1314_Math.csv")
 dta = dta.drop(['math_mean', 'latitude', 'longitude'], axis = 1)
 dta.head()
 
-sv = pd.read_csv("./clean/Subject3_Math/Ensemble/data/StreetViewPreds.csv")
+sv = pd.read_csv("./clean/Subject3_Math/Ensemble/data/StreetViewPreds_GPU.csv")
 sv.head()
 
 # Split along headings

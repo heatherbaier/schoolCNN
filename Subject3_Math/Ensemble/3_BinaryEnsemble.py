@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 
 # Read in and split data into training and validation sets (This is the original CSV from my very first two 
 # CNN models. It's a little messy but is the only thing I have downloaded from before CDSW crashed).
-dta = pd.read_csv("./clean/Subject3_Math/Ensemble/data/EnsemblePreds.csv")
+dta = pd.read_csv("./clean/Subject3_Math/Ensemble/data/EnsemblePreds_GPU.csv")
 #dta = dta.drop(['school_id'], axis = 1)
 dta.head()
 
