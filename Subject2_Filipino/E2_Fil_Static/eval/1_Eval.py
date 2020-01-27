@@ -4,7 +4,7 @@ from torchvision import datasets, models, transforms
 from imgaug import parameters as iap
 from imgaug import augmenters as iaa
 from torch.optim import lr_scheduler
-from torch.autograd import Variable
+from torch.autograd import VariableRe_predicting
 from torchsummary import summary
 import matplotlib.pyplot as plt
 import torch.optim as optim
@@ -48,7 +48,7 @@ class ImgAugTransform:
     return self.aug.augment_image(img)
 
 
-model_ft = joblib.load("./clean/Subject2_Filipino/E2_Fil_Static/models/StaticResNeXt101_Fil_10epoch.sav")
+model_ft = joblib.load("./clean/Subject2_Filipino/E2_Fil_Static/models/gpu/StaticResNeXt101_Fil_50epoch.sav")
 directory = "./clean/AllSubjects/Ensemble2_StaticResNeXt101/data/jpg/"
 transform = transforms.Compose([
 	ImgAugTransform(),
@@ -87,5 +87,5 @@ def EvalModel(model, directory, transforms):
 
 allpreds = EvalModel(model_ft, directory, transform)
 allpreds.head()
-allpreds.to_csv("./clean/Subject2_Filipino/Ensemble/data/StaticPreds.csv")
+allpreds.to_csv("./clean/Subject2_Filipino/Ensemble/data/StaticPreds_GPU.csv")
 

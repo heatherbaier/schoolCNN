@@ -50,7 +50,7 @@ static['intervention'].value_counts()
 static['correct'].value_counts()
 
 
-sv = pd.read_csv("./clean/AllSubjects/Ensemble/data/StreetViewPreds_v2.csv")
+sv = pd.read_csv("./clean/AllSubjects/Ensemble/data/StreetViewPreds_GPU.csv")
 sv.head()
 
 # Split along headings
@@ -130,4 +130,4 @@ comb.head()
 
 
 
-comb.to_csv("./clean/AllSubjects/Ensemble/data/EnsemblePreds.csv", index = False)
+comb.to_csv("./clean/AllSubjects/Ensemble/data/EnsemblePreds_GPU.csv", index = False)

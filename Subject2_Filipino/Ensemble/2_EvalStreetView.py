@@ -5,7 +5,7 @@ dta = pd.read_csv("./clean/Subject2_Filipino/E1_Fil_Landsat/data/y1314_Filipino.
 dta = dta.drop(['filipino_mean', 'latitude', 'longitude'], axis = 1)
 dta.head()
 
-sv = pd.read_csv("./clean/Subject2_Filipino/Ensemble/data/StreetViewPreds.csv")
+sv = pd.read_csv("./clean/Subject2_Filipino/Ensemble/data/StreetViewPreds_GPU.csv")
 sv.head()
 
 # Split along headings

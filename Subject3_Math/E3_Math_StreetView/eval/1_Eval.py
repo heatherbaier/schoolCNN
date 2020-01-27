@@ -90,7 +90,7 @@ def EvalModel(model, directory, transforms):
 
 static_preds = EvalModel(model_ft, directory, transform)
 static_preds.head()
-static_preds.to_csv("./clean/Subject3_Math/Ensemble/data/StreetViewPreds.csv")
+static_preds.to_csv("./clean/Subject3_Math/Ensemble/data/StreetViewPreds_GPU.csv")
 
 
 

@@ -5,7 +5,7 @@ dta = pd.read_csv("./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/
 dta = dta.drop(['english_mean', 'latitude', 'longitude'], axis = 1)
 dta.head()
 
-sv = pd.read_csv("./clean/AllSubjects/Ensemble/data/StreetViewPreds_v2.csv")
+sv = pd.read_csv("./clean/AllSubjects/Ensemble/data/StreetViewPreds_GPU.csv")
 sv.head()
 
 # Split along headings

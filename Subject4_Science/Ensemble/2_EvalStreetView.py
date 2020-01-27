@@ -1,11 +1,11 @@
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 
-dta = pd.read_csv("./clean/AllSubjects/Ensemble1_LandsatResNeXt101/data/y1314_AllSubjects.csv")
-dta = dta.drop(['overall_mean', 'latitude', 'longitude'], axis = 1)
+dta = pd.read_csv("./clean/Subject4_Science/E1_Sci_Landsat/data/y1314_Science.csv")
+dta = dta.drop(['science_mean', 'latitude', 'longitude'], axis = 1)
 dta.head()
 
-sv = pd.read_csv("./clean/AllSubjects/Ensemble/data/StreetViewPreds_GPU.csv")
+sv = pd.read_csv("./clean/Subject4_Science/Ensemble/data/StreetViewPreds_GPU.csv")
 sv.head()
 
 # Split along headings

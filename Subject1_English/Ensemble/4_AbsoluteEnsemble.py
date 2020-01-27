@@ -22,7 +22,7 @@ df = pd.read_csv("./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/d
 df = df.drop(['intervention', 'latitude', 'longitude'], axis = 1)
 #df['english_mean'] = df['overall_mean'] / 5
 
-dta = pd.read_csv("./clean/Subject1_English/Ensemble/data/EnsemblePreds.csv")
+dta = pd.read_csv("./clean/Subject1_English/Ensemble/data/EnsemblePreds_GPU.csv")
 dta = pd.merge(dta, df, on = 'school_id')
 dta = dta.drop(['intervention'], axis = 1)
 dta.shape

@@ -18,11 +18,11 @@ from sklearn.ensemble import BaggingRegressor
 
 
 # Read in and split data into training and validation sets 
-df = pd.read_csv("./clean/Subject3_Math/E1_Math_Landsat/data/y1314_Math.csv")
+df = pd.read_csv("./clean/Subject2_Filipino/E1_Fil_Landsat/data/y1314_Filipino.csv")
 df = df.drop(['intervention', 'latitude', 'longitude'], axis = 1)
 #df['english_mean'] = df['overall_mean'] / 5
 
-dta = pd.read_csv("./clean/Subject2_Filipino/Ensemble/data/EnsemblePreds.csv")
+dta = pd.read_csv("./clean/Subject2_Filipino/Ensemble/data/EnsemblePreds_GPU.csv")
 dta = pd.merge(dta, df, on = 'school_id')
 dta = dta.drop(['intervention'], axis = 1)
 dta.shape
@@ -37,10 +37,10 @@ msk = np.random.rand(len(dta)) < 0.8
 train = dta[msk]
 test = dta[~msk]
 
-y_train = train.pop("math_mean")
+y_train = train.pop("filipino_mean")
 x_train = train
 
-y_test = test.pop("math_mean")
+y_test = test.pop("filipino_mean")
 x_test = test
 
 
@@ -105,17 +105,17 @@ print('Bag MAD ' + str(bag_MAD))
 
 
 
-to_pred = dta.drop(['math_mean'], axis = 1)
-preds = svr_regressionFit.predict(to_pred)
+to_pred = dta.drop(['filipino_mean'], axis = 1)
+preds = RF_regressionFit.predict(to_pred)
 
-dta = pd.read_csv("./clean/Subject2_Filipino/Ensemble/data/EnsemblePreds.csv")
-df = pd.read_csv("./clean/Subject3_Math/E1_Math_Landsat/data/y1314_Math.csv")
+dta = pd.read_csv("./clean/Subject2_Filipino/Ensemble/data/EnsemblePreds_GPU.csv")
+df = pd.read_csv("./clean/Subject2_Filipino/E1_Fil_Landsat/data/y1314_Filipino.csv")
 dta = pd.merge(dta, df, on = 'school_id')
 
 final_df = pd.DataFrame()
 final_df['school_id'] = dta['school_id']
 final_df['intervention'] = dta['intervention_x']
-final_df['actual_mean'] = dta['math_mean']
+final_df['actual_mean'] = dta['filipino_mean']
 final_df['predicted_mean'] = preds.tolist()
 final_df['error'] = abs(final_df['actual_mean'] - final_df['predicted_mean'])
 

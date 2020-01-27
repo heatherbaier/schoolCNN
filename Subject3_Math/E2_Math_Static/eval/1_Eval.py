@@ -87,5 +87,5 @@ def EvalModel(model, directory, transforms):
 
 allpreds = EvalModel(model_ft, directory, transform)
 allpreds.head()
-allpreds.to_csv("./clean/Subject3_Math/Ensemble/data/StaticPreds.csv")
+allpreds.to_csv("./clean/Subject3_Math/Ensemble/data/StaticPreds_GPU.csv")
 

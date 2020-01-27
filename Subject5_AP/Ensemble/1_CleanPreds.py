@@ -1,17 +1,17 @@
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 
-dta = pd.read_csv("./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/data/y1314_English.csv")
-dta = dta.drop(['english_mean', 'latitude', 'longitude'], axis = 1)
+dta = pd.read_csv("./clean/Subject5_AP/E1_AP_Landsat/data/y1314_AP.csv")
+dta = dta.drop(['ap_mean', 'latitude', 'longitude'], axis = 1)
 dta.head()
 
 # Landsat
-landsat_pass = pd.read_csv("./clean/Subject1_English/Ensemble/data/LandsatPassPreds_GPU.csv")
+landsat_pass = pd.read_csv("./clean/Subject5_AP/Ensemble/data/LandsatPassPreds_GPU.csv")
 landsat_pass = landsat_pass.drop(['Unnamed: 0'], axis = 1)
 landsat_pass.head()
 landsat_pass.shape
 
-landsat_fail = pd.read_csv("./clean/Subject1_English/Ensemble/data/LandsatFailPreds_GPU.csv")
+landsat_fail = pd.read_csv("./clean/Subject5_AP/Ensemble/data/LandsatFailPreds_GPU.csv")
 landsat_fail = landsat_fail.drop(['Unnamed: 0'], axis = 1)
 landsat_fail.head()
 landsat_fail.shape
@@ -32,7 +32,7 @@ landsat_preds['correct'].value_counts()
 
 
 # Static
-static = pd.read_csv("./clean/Subject1_English/Ensemble/data/StaticPreds_GPU.csv")
+static = pd.read_csv("./clean/Subject5_AP/Ensemble/data/StaticPreds_GPU.csv")
 static = static.drop(['Unnamed: 0'], axis = 1)
 static.head()
 
@@ -50,7 +50,7 @@ static['intervention'].value_counts()
 static['correct'].value_counts()
 
 
-sv = pd.read_csv("./clean/Subject1_English/Ensemble/data/StreetViewPreds_GPU.csv")
+sv = pd.read_csv("./clean/Subject5_AP/Ensemble/data/StreetViewPreds_GPU.csv")
 sv = sv.drop(['Unnamed: 0'], axis = 1)
 sv.head()
 
@@ -131,4 +131,4 @@ comb.head()
 
 
 
-comb.to_csv("./clean/Subject1_English/Ensemble/data/EnsemblePreds_GPU.csv", index = False)
+comb.to_csv("./clean/Subject4_Science/Ensemble/data/EnsemblePreds_GPU.csv", index = False)

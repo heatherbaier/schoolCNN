@@ -48,8 +48,8 @@ class ImgAugTransform:
     return self.aug.augment_image(img)
 
 
-model_ft = joblib.load("./clean/Subject1_English/Ensemble3_English_StreetViewResNeXt101/models/gpu/StreetViewResNeXt101_English_10epoch.sav")
-directory = "./clean/AllSubjects/Ensemble3_StreetViewResNet152/data/imagery/"
+model_ft = joblib.load("./clean/Subject5_AP/E1_AP_Landsat/models/Landsat_AP_50epoch.sav")
+directory = "./clean/Subject5_AP/E1_AP_Landsat/data/pass/"
 transform = transforms.Compose([
 	ImgAugTransform(),
 	transforms.ToTensor(),
@@ -58,41 +58,45 @@ transform = transforms.Compose([
 
 
 def EvalModel(model, directory, transforms):
-  model = model.cuda()
-  df = pd.DataFrame()
-  cpass, cfail, ids, h = [], [], [], []
-  count = 0
-  for filename in os.listdir(directory):
-    count += 1
-    school_id = filename[0:6]
-    ids.append(school_id)
-    heading = filename[10:13]
-    h.append(heading)
-    to_open = directory + filename
-    png = Image.open(to_open)
-    img_t = transform(png)
-    batch_t = torch.unsqueeze(img_t, 0).cuda()
-    model_ft.eval()
-    out = model_ft(batch_t)
-    _, index = torch.max(out, 1)
-    percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100
-    #			print(percentage)
-    cfail.append(percentage[0].tolist())
-    cpass.append(percentage[1].tolist())
-    print("Predicted " + str(count) + " out of " + str(len(os.listdir(directory))) + " images." )
-  df['school_id'] = ids
-  df['heading'] = h
-  df['prob_fail'] = cfail
-  df['prob_pass'] = cpass
-  return df
+	model = model.cuda()
+	df = pd.DataFrame()
+	cpass, cfail, ids, class_pred = [], [], [], []
+	count = 0
+	for filename in os.listdir(directory):
+			count += 1
+			school_id = filename[0:6]
+			ids.append(school_id)
+			to_open = directory + filename
+			png = Image.open(to_open)
+			img_t = transform(png)
+			batch_t = torch.unsqueeze(img_t, 0).cuda()
+			model_ft.eval()
+			out = model_ft(batch_t)
+			_, index = torch.max(out, 1)
+			percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100
+#			print(percentage)
+			cfail.append(percentage[0].tolist())
+			cpass.append(percentage[1].tolist())
+			print("Predicted " + str(count) + " out of " + str(len(os.listdir(directory))) + " images." )
+	df['school_id'] = ids
+	df['prob_fail'] = cfail
+	df['prob_pass'] = cpass
+	return df
 
 
 
-static_preds = EvalModel(model_ft, directory, transform)
-static_preds.to_csv("./clean/Subject1_English/Ensemble/data/StreetViewPreds_GPU.csv")
+pass_preds = EvalModel(model_ft, directory, transform)
+pass_preds.to_csv("./clean/Subject5_AP/Ensemble/data/LandsatPassPreds_GPU.csv")
 
 
 
+directory = "./clean/Subject5_AP/E1_AP_Landsat/data/fail/"
+transform = transforms.Compose([
+	ImgAugTransform(),
+	transforms.ToTensor(),
+	transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+])
 
-
+fail_preds = EvalModel(model_ft, directory, transform)
+fail_preds.to_csv("./clean/Subject5_AP/Ensemble/data/LandsatFailPreds_GPU.csv")
 

@@ -48,7 +48,7 @@ class ImgAugTransform:
     return self.aug.augment_image(img)
 
 
-model_ft = joblib.load("./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/models/LandsatResNeXt101_English_10epoch.sav")
+model_ft = joblib.load("./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/models/gpu/LandsatResNeXt101_English_10epoch.sav")
 directory = "./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/data/pass/"
 transform = transforms.Compose([
 	ImgAugTransform(),
@@ -58,7 +58,7 @@ transform = transforms.Compose([
 
 
 def EvalModel(model, directory, transforms):
-	
+	model = model.cuda()
 	df = pd.DataFrame()
 	cpass, cfail, ids, class_pred = [], [], [], []
 	count = 0
@@ -69,7 +69,7 @@ def EvalModel(model, directory, transforms):
 			to_open = directory + filename
 			png = Image.open(to_open)
 			img_t = transform(png)
-			batch_t = torch.unsqueeze(img_t, 0)
+			batch_t = torch.unsqueeze(img_t, 0).cuda()
 			model_ft.eval()
 			out = model_ft(batch_t)
 			_, index = torch.max(out, 1)
@@ -86,11 +86,11 @@ def EvalModel(model, directory, transforms):
 
 
 pass_preds = EvalModel(model_ft, directory, transform)
-pass_preds.to_csv("./clean/Subject1_English/Ensemble/data/LandsatPassPreds.csv")
+pass_preds.to_csv("./clean/Subject1_English/Ensemble/data/LandsatPassPreds_GPU.csv")
 
 
 
-model_ft = joblib.load("./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/models/LandsatResNeXt101_English_10epoch.sav")
+model_ft = joblib.load("./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/models/gpu/LandsatResNeXt101_English_10epoch.sav")
 directory = "./clean/Subject1_English/Ensemble1_English_LandsatResNeXt101/data/fail/"
 transform = transforms.Compose([
 	ImgAugTransform(),
@@ -99,7 +99,7 @@ transform = transforms.Compose([
 ])
 
 fail_preds = EvalModel(model_ft, directory, transform)
-fail_preds.to_csv("./clean/Subject1_English/Ensemble/data/LandsatFailPreds.csv")
+fail_preds.to_csv("./clean/Subject1_English/Ensemble/data/LandsatFailPreds_GPU.csv")
 
 
 

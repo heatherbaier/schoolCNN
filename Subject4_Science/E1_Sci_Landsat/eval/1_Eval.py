@@ -48,7 +48,7 @@ class ImgAugTransform:
     return self.aug.augment_image(img)
 
 
-model_ft = joblib.load("./clean/Subject4_Science/E1_Sci_Landsat/models/Landsat_Sci_50epoch.sav")
+model_ft = joblib.load("./clean/Subject4_Science/E1_Sci_Landsat/models/")
 directory = "./clean/Subject4_Science/E1_Sci_Landsat/data/pass/"
 transform = transforms.Compose([
 	ImgAugTransform(),

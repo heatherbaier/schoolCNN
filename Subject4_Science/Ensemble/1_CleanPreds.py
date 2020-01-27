@@ -6,12 +6,12 @@ dta = dta.drop(['science_mean', 'latitude', 'longitude'], axis = 1)
 dta.head()
 
 # Landsat
-landsat_pass = pd.read_csv("./clean/Subject4_Science/Ensemble/data/LandsatPassPreds.csv")
+landsat_pass = pd.read_csv("./clean/Subject4_Science/Ensemble/data/LandsatPassPreds_GPU.csv")
 landsat_pass = landsat_pass.drop(['Unnamed: 0'], axis = 1)
 landsat_pass.head()
 landsat_pass.shape
 
-landsat_fail = pd.read_csv("./clean/Subject4_Science/Ensemble/data/LandsatFailPreds.csv")
+landsat_fail = pd.read_csv("./clean/Subject4_Science/Ensemble/data/LandsatFailPreds_GPU.csv")
 landsat_fail = landsat_fail.drop(['Unnamed: 0'], axis = 1)
 landsat_fail.head()
 landsat_fail.shape
@@ -32,7 +32,7 @@ landsat_preds['correct'].value_counts()
 
 
 # Static
-static = pd.read_csv("./clean/Subject3_Math/Ensemble/data/StaticPreds.csv")
+static = pd.read_csv("./clean/Subject4_Science/Ensemble/data/StaticPreds_GPU.csv")
 static = static.drop(['Unnamed: 0'], axis = 1)
 static.head()
 
@@ -50,7 +50,7 @@ static['intervention'].value_counts()
 static['correct'].value_counts()
 
 
-sv = pd.read_csv("./clean/Subject3_Math/Ensemble/data/StreetViewPreds.csv")
+sv = pd.read_csv("./clean/Subject4_Science/Ensemble/data/StreetViewPreds_GPU.csv")
 sv = sv.drop(['Unnamed: 0'], axis = 1)
 sv.head()
 
@@ -131,4 +131,4 @@ comb.head()
 
 
 
-comb.to_csv("./clean/Subject3_Math/Ensemble/data/EnsemblePreds.csv", index = False)
+comb.to_csv("./clean/Subject4_Science/Ensemble/data/EnsemblePreds_GPU.csv", index = False)
